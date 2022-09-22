@@ -1,17 +1,22 @@
 `flutter run`
 
-When going to page 2:
+If you click on the following, in this sequence:
+
+- The "A Screen" Tab
+- The "View A Details" link
+- Back navigation arrow
+- The "B Screen" Tab
+- The "View B Details" link
+- Back navigation arrow
+
+Then the only things that are logged are:
 
 ```
-[INFO] GoRouter: going to /page2/pv1?q1=qv1
-[INFO] MyNavObserver: didPush: route(page2: {p1: pv1, q1: qv1}), previousRoute= route(/: {q1: qv1})
-[INFO] MyNavObserver: didPop: route(page2: {p1: pv1, q1: qv1}), previousRoute= route(/: {q1: qv1})
+[MyNavObserver] didPush: route(: {}), previousRoute= null
+[MyNavObserver] didPush: route(/b/details: {}), previousRoute= route(: {})
+[MyNavObserver] didPop: route(/b/details: {}), previousRoute= route(: {})
 ```
 
-When going to page 2 alternative:
+Even though all navigation was through things like `GoRouter.of(context).go('/a')`
 
-```
-[INFO] GoRouter: going to /page2alternative/pv1?q1=qv1
-[INFO] MyNavObserver: didPush: route(null: null), previousRoute= route(/: {q1: qv1})
-[INFO] MyNavObserver: didPop: route(null: null), previousRoute= route(/: {q1: qv1})
-```
+The only route that appears as part `NavigatorObserver` is the `b/details` route, and I wonder if it's because it's using a `_rootNavigatorKey`.
